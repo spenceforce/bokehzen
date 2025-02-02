@@ -105,23 +105,23 @@ else:
     ]
 
 
-def _reverse_contains(x, y):
+def _isin(x, y):
     """
-    Helper function to reverse the order of arguments for `in` operations.
+    Check if an element exists within a collection.
 
     Parameters
     ----------
     x : Any
-        The item to check for containment.
+        The element to check for membership.
     y : Any
-        The collection to check within.
+        The collection in which to check for `x`.
 
     Returns
     -------
     bool
-        True if `x` is in `y`, False otherwise.
+        True if `x` is in `y`, otherwise False.
     """
-    return operator.contains(y, x)
+    return x in y
 
 
 class CDSColumn:
@@ -204,7 +204,7 @@ class CDSColumn:
         IndexFilter
             A filter object indicating which indices satisfy the condition.
         """
-        return self._static_filter(_reverse_contains, other)
+        return self._static_filter(_isin, other)
 
 
 class ColumnDataSource(BokehColumnDataSource, DataModel):
