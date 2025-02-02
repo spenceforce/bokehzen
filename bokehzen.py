@@ -227,12 +227,14 @@ class ColumnDataSource(BokehColumnDataSource, DataModel):
             A wrapped column or filtered data source.
         """
         if isinstance(item, str):
-            return CDSColumn(self, item)  # Return column wrapper
+            return CDSColumn(self, item)
         if isinstance(item, Filter):
             if self.view is None:
-                return self.clone(view=CDSView(filter=item))  # Apply filter
+                return self.clone(view=CDSView(filter=item))
             else:
-                return self.clone(view=CDSView(filter=self.view.filter & item))
+                # Take the intersection of the existing and new filters.
+                view = CDSView(filter=self.view.filter & item)
+                return self.clone(view=view)
         raise TypeError(f"Expected type `str` or `Filter`. Got {type(item)}.")
 
 
