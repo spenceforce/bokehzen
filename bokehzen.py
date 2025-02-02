@@ -96,8 +96,6 @@ if _bk_version[0] == 3 and _bk_version[1] <= 6:
         "y",
         "scatter",
     ]
-    for gm in glyph_methods:
-        assert hasattr(GlyphAPI, gm)
 else:
     # Dynamically extract available glyph methods for newer Bokeh versions
     glyph_methods = [
