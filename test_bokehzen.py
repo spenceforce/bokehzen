@@ -1,4 +1,4 @@
-import operator as op
+import operator
 
 import pytest
 from bokehzen import ColumnDataSource, ZenColumn
@@ -13,20 +13,19 @@ def test_zen_column():
 
 
 @pytest.mark.parametrize(
-    "operator,other,expected",
+    "op,other,expected",
     [
-        (op.lt, 2, IndexFilter([0])),
-        (op.le, 2, IndexFilter([0, 1])),
-        (op.eq, 2, IndexFilter([1])),
-        (op.ne, 2, IndexFilter([0, 2])),
-        (op.ge, 2, IndexFilter([1, 2])),
-        (op.gt, 2, IndexFilter([2])),
-        (op.contains, [1, 3], IndexFilter([0, 2]))
+        (operator.lt, 2, IndexFilter([0])),
+        (operator.le, 2, IndexFilter([0, 1])),
+        (operator.eq, 2, IndexFilter([1])),
+        (operator.ne, 2, IndexFilter([0, 2])),
+        (operator.ge, 2, IndexFilter([1, 2])),
+        (operator.gt, 2, IndexFilter([2])),
+        # `operator.contains` would test if `other` is in the column. We want the opposite so
+        # use `ZenColumn.isin`.
+        (ZenColumn.isin, [1, 3], IndexFilter([0, 2]))
     ]
 )
-def test_static_filter(operator, other, expected):
+def test_static_filter(op, other, expected):
     source = ColumnDataSource({"a": [1, 2, 3]})
-    if operator is not op.contains:
-        assert operator(source["a"], other).indices == expected.indices
-    else:
-        assert source["a"].isin(other).indices == expected.indices
+    assert op(source["a"], other).indices == expected.indices
