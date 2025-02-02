@@ -16,6 +16,7 @@ BokehZen is licensed under the MIT License.
 
 There are several interactive visualization libraries out there. A few of the big ones are:
 
-- [hvPlot](https://hvplot.holoviz.org/) - BokehZen is heavily inspired by hvPlot and I highly recommend it as an alternative.
+- [hvPlot](https://hvplot.holoviz.org/) - BokehZen is heavily inspired by the interactive API of hvPlot and I highly recommend it as an alternative.
 - [Bokeh](https://bokeh.org/) - For the purists out there.
+- [HoloViews](https://holoviews.org/) - A great data exploration library.
 - [Plotly](https://plotly.com/) - An alternative to Bokeh.
