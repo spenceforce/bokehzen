@@ -1,7 +1,8 @@
 import operator
 
 import pytest
-from bokehzen import ColumnDataSource, CDSColumn, figure
+from bokehzen import ColumnDataSource, figure
+from bokehzen.models import CDSColumn
 from bokeh.models import CDSView, IndexFilter, IntersectionFilter
 from bokeh.plotting.glyph_api import GlyphAPI
 

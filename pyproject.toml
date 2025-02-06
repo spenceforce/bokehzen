@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bokehzen"
+authors = [
+  {name = "Spencer Mitchell", email = "smitchell556@gmail.com"}
+]
+maintainers = [
+  {name = "Spencer Mitchell", email = "smitchell556@gmail.com"}
+]
+description = "A lightweight, developer friendly bokeh extension."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+dynamic = ["version"]
+dependencies = ["bokeh>=3.1"]
+keywords = ["bokeh", "data", "visual", "visualization", "plot", "plotting"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Intended Audience :: End Users/Desktop",
+  "Intended Audience :: Financial and Insurance Industry",
+  "Intended Audience :: Healthcare Industry",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: Legal Industry",
+  "Intended Audience :: Other Audience",
+  "Intended Audience :: Science/Research",
+  "Topic :: Office/Business",
+  "Topic :: Office/Business :: Financial",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Visualization",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Utilities",
+]
+
+[project.urls]
+Homepage = "https://github.com/spenceforce/bokehzen"
+Repository = "https://github.com/spenceforce/bokehzen"
+Issues = "https://github.com/spenceforce/bokehzen/issues"
+
+[project.optional-dependencies]
+develop = ["pytest", "black"]
+
+[tool.hatch.version]
+path = "bokehzen/__init__.py"
