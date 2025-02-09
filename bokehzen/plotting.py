@@ -3,6 +3,7 @@ Plotting Utilities for BokehZen
 
 This module extends Bokeh's `figure` class by integrating automatic filtering with glyph methods. It wraps Bokeh's native plotting API to allow seamless filtering using BokehZen's enhanced `ColumnDataSource`.
 """
+
 import operator
 from functools import wraps
 from inspect import getmembers, signature

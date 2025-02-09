@@ -21,9 +21,7 @@ def test_renderer_combines_views():
     filtered = source[source["x"] > 1]
     other_view = CDSView(filter=IndexFilter([2]))
     fig = figure()
-    renderer = fig.scatter(
-        x="x", y="y", source=filtered, view=other_view
-    )
+    renderer = fig.scatter(x="x", y="y", source=filtered, view=other_view)
     assert filtered.view.filter in renderer.view.filter.operands
     assert other_view.filter in renderer.view.filter.operands
     assert len([filtered.view, other_view]) == len(renderer.view.filter.operands)

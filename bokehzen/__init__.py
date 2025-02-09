@@ -1,4 +1,5 @@
 """BokehZen: A Simplified API for Bokeh"""
+
 from .models import ColumnDataSource
 from .plotting import figure
 
