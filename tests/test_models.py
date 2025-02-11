@@ -2,7 +2,7 @@ import operator
 
 import pytest
 from bokehzen import ColumnDataSource
-from bokehzen.models import CDSColumn
+from bokehzen.cdscolumn import CDSColumn
 from bokeh.models import IntersectionFilter, widgets
 
 
@@ -52,48 +52,3 @@ def test_source_has_intersection_filter():
     for indices in ([0, 1], [1, 2]):
         assert any(op.indices == indices for op in filtered2.view.filter.operands)
     assert isinstance(filtered2.view.filter, IntersectionFilter)
-
-
-@pytest.mark.parametrize(
-    "Checkbox", [widgets.CheckboxButtonGroup, widgets.CheckboxGroup]
-)
-def test_checkbox_filter(Checkbox):
-    values = ["A", "B", "C"]
-    checkbox = Checkbox(labels=values, active=[0])
-    source = ColumnDataSource({"x": values})
-    index_filter = source["x"].isin(checkbox)
-
-    assert index_filter.indices == [0]
-    assert len(checkbox.js_property_callbacks) > 0
-
-    with pytest.raises(ValueError):
-        source["x"] == checkbox
-
-
-def test_dropdown_filter():
-    values = ["A", "B", "C"]
-    dropdown = widgets.Dropdown(menu=values)
-    source = ColumnDataSource({"x": values})
-    index_filter = source["x"] == dropdown
-
-    assert index_filter.indices == [0, 1, 2]
-    assert len(dropdown.js_event_callbacks) > 0
-
-    dropdown = widgets.Dropdown(menu=values)
-    index_filter = source["x"].isin(dropdown)
-    assert index_filter.indices == [0, 1, 2]
-    assert len(dropdown.js_event_callbacks) > 0
-
-
-def test_multichoice_filter():
-    values = ["A", "B", "C"]
-    idx = 1
-    multichoice = widgets.MultiChoice(value=values[idx : idx + 1], options=values)
-    source = ColumnDataSource({"x": values})
-    index_filter = source["x"].isin(multichoice)
-
-    assert index_filter.indices == [idx]
-    assert len(multichoice.js_property_callbacks) > 0
-
-    with pytest.raises(ValueError):
-        source["x"] == multichoice

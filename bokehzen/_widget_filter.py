@@ -83,11 +83,45 @@ def dropdown_filter(widget, source, column, index_filter, op):
     return index_filter
 
 
-def multichoice_filter(widget, source, column, index_filter):
+_MULTIOPTION_CONTAINS = """
+export default ({widget, source, column, index_filter}, obj, data, context) => {
+    const indices = []
+    for (const [i, value] of source.data[column].entries()) {
+        if (widget.value.includes(value)) {
+            indices.push(i)
+        }
+    }
+    index_filter.indices = indices
+}
+"""
+
+
+def multioption_filter(widget, source, column, index_filter):
     callback_args = dict(
         widget=widget, source=source, column=column, index_filter=index_filter
     )
-    callback = CustomJS(args=callback_args, code=_MULTICHOICE_CONTAINS)
+    callback = CustomJS(args=callback_args, code=_MULTIOPTION_CONTAINS)
+    widget.js_on_change("value", callback)
+
+    return index_filter
+
+_NUMERICINPUT_COMPARISON = """
+export default ({{widget, source, column, index_filter}}, obj, data, context) => {{
+    const indices = []
+    for (const [i, value] of source.data[column].entries()) {{
+        if (value {comparison} widget.value) {{
+            indices.push(i)
+        }}
+    }}
+    index_filter.indices = indices
+}}
+"""
+
+def numericinput_filter(widget, source, column, index_filter, op):
+    callback_args = dict(
+        widget=widget, source=source, column=column, index_filter=index_filter
+    )
+    callback = CustomJS(args=callback_args, code=_NUMERICINPUT_COMPARISON.format(comparison=_operator_map[op]))
     widget.js_on_change("value", callback)
 
     return index_filter

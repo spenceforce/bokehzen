@@ -3,7 +3,7 @@ import operator
 from bokeh.models import IndexFilter, Widget, widgets
 
 from ._comparison import isin
-from ._widget_filter import checkbox_filter, dropdown_filter, multichoice_filter
+from ._widget_filter import checkbox_filter, dropdown_filter, multioption_filter, numericinput_filter
 
 
 class CDSColumn:
@@ -73,13 +73,19 @@ class CDSColumn:
             index_filter = IndexFilter(list(range(len(self.data))))
             return dropdown_filter(widget, self.source, self.key, index_filter, op)
 
-        if isinstance(widget, widgets.MultiChoice):
+        if isinstance(widget, (widgets.MultiChoice, widgets.MultiSelect)):
             if op is not isin:
                 raise ValueError(
                     f"Only `isin` comparison is supported for `type(widget)`."
                 )
             index_filter = self._static_filter(op, widget.value)
-            return multichoice_filter(widget, self.source, self.key, index_filter)
+            return multioption_filter(widget, self.source, self.key, index_filter)
+
+        if isinstance(widget, widgets.NumericInput):
+            if op is isin:
+                raise ValueError(f"`isin` comparison is not supported for `type(widget)`.")
+            index_filter = self._static_filter(op, widget.value)
+            return numericinput_filter(widget, self.source, self.key, index_filter, op)
 
     # Define operator overloads for intuitive filtering
     def __lt__(self, other):
